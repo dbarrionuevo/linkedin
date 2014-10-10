@@ -134,6 +134,11 @@ describe LinkedIn::Api do
       client.company(:name => 'acme').should be_an_instance_of(LinkedIn::Mash)
     end
 
+    it "should be able to view a collection of companies by bulk ids" do
+      stub_request(:get, "https://api.linkedin.com/v1/companies::(1586,1587)").to_return(:body => "{}")
+      client.company(:ids => '1586,1587').should be_an_instance_of(LinkedIn::Mash)
+    end
+
     it "should be able to view a company by e-mail domain" do
       stub_request(:get, "https://api.linkedin.com/v1/companies?email-domain=acme.com").to_return(:body => "{}")
       client.company(:domain => 'acme.com').should be_an_instance_of(LinkedIn::Mash)
